@@ -1,0 +1,16 @@
+{
+  "name": "egg-coca-lbs",
+  "version": "1.0.0",
+  "description": "coca lbs base qq map",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rojer95/egg-coca-lbs.git"
+  },
+  "eggPlugin": {
+    "name": "cocaLbs",
+    "dependencies": []
+  },
+  "author": "rojerchen",
+  "dependencies": {}
+}
