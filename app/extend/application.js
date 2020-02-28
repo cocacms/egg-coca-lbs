@@ -3,6 +3,8 @@ const CREATE = 'https://apis.map.qq.com/place_cloud/data/create';
 const UPDATE = 'https://apis.map.qq.com/place_cloud/data/update';
 const DELETE = 'https://apis.map.qq.com/place_cloud/data/delete';
 const TRANSLATE = 'https://apis.map.qq.com/ws/coord/v1/translate';
+const IP = 'https://apis.map.qq.com/ws/location/v1/ip ';
+const GEOCODER = 'https://apis.map.qq.com/ws/geocoder/v1/';
 
 module.exports = {
   /**
@@ -119,5 +121,57 @@ module.exports = {
       longitude: data.locations[0].lng,
       latitude: data.locations[0].lat,
     };
+  },
+
+  /**
+   * IP地址获取其当前所在地理位置
+   * @param {*} ip ip
+   */
+  async lbs_ip(ip) {
+    const { data } = await this.curl(IP, {
+      dataType: 'json',
+      contentType: 'json',
+      method: 'GET',
+      data: {
+        ip,
+        key: this.config.lbs.key,
+      },
+    });
+
+    if (data.status !== 0) {
+      throw new Error(`解析IP失败，错误信息：${data.message}`);
+    }
+
+    return data.result;
+  },
+
+  /**
+   * 地址解析
+   * @param {*} lat 纬度
+   * @param {*} lng 经度
+   * @param {*} address 地理位置
+   */
+  async lbs_geocoder(lat, lng, address) {
+    const post = {};
+    if (address) {
+      post.address;
+    } else if (lat && lng) {
+      post.location = `${lat},${lng}`;
+    }
+    const { data } = await this.curl(GEOCODER, {
+      dataType: 'json',
+      contentType: 'json',
+      method: 'GET',
+      data: {
+        ...post,
+        key: this.config.lbs.key,
+      },
+    });
+
+    if (data.status !== 0) {
+      throw new Error(`解析失败，错误信息：${data.message}`);
+    }
+
+    return data.result;
   },
 };
