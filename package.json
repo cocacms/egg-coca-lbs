@@ -1,6 +1,6 @@
 {
   "name": "egg-coca-lbs",
-  "version": "1.0.1",
+  "version": "2.0.1",
   "description": "coca lbs base on qq map",
   "main": "index.js",
   "repository": {
